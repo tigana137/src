@@ -13,30 +13,36 @@ export interface ParamsProp {
   saisiepasswd: string,
   login: string,
   mp: string,
-  ecole_url:string,
+  ecole_url: string,
 
 }
 
-const ParamsContext = React.createContext<ParamsProp>({ sid: 0, school_name: "", saisieprenom: "", saisienom: "", login: "", saisiepasswd: "", mp: '',ecole_url:"" })
+const ParamsContext = React.createContext<ParamsProp>({ sid: 0, school_name: "", saisieprenom: "", saisienom: "", login: "", saisiepasswd: "", mp: '', ecole_url: "" })
+const UrlContext = React.createContext<string>("https://4896-197-0-245-157.ngrok-free.app")
 
 export const UseParams = () => {
   return useContext(ParamsContext)
 }
 
+export const UseUrl = () => {
+  return useContext(UrlContext)
+}
+
+
 function App() {
-  const [params, set_params] = useState<ParamsProp>({ sid: 842920, school_name: "", saisieprenom: "", saisienom: "", saisiepasswd: "", login: "", mp: '',ecole_url:"" });
+  const [params, set_params] = useState<ParamsProp>({ sid: 842920, school_name: "", saisieprenom: "", saisienom: "", saisiepasswd: "", login: "", mp: '', ecole_url: "" });
   const [InsertSid_isVisible, set_InsertSid] = useState(false);
   const [Logins_isVisible, set_Logins] = useState(false);
   const [Dashborad_isVisible, set_Dashborad] = useState(true);
 
-  const handle_sid = (sid: number, school_name: string, saisieprenom: string, saisienom: string,ecole_url:string) => {
+  const handle_sid = (sid: number, school_name: string, saisieprenom: string, saisienom: string, ecole_url: string) => {
     set_params(prevParams => ({
       ...prevParams,
       sid: sid,
       school_name: school_name,
       saisieprenom: saisieprenom,
       saisienom: saisienom,
-      ecole_url:ecole_url+'/',
+      ecole_url: ecole_url + '/',
     }));
     set_InsertSid(false)
     set_Logins(true)
@@ -54,7 +60,7 @@ function App() {
     <>
       <ParamsContext.Provider value={params}>
         {InsertSid_isVisible && <InsertSid Onsubmit={handle_sid} />}
-        {Logins_isVisible && <Logins  Onsubmit={handle_logins} />}
+        {Logins_isVisible && <Logins Onsubmit={handle_logins} />}
         {Dashborad_isVisible && <Dashboard />}
       </ParamsContext.Provider>
     </>

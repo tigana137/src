@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { UseUrl } from "../App";
 
 interface Props {
     Onsubmit: Function;
@@ -6,6 +7,7 @@ interface Props {
 
 
 const Insert_ecole_id = ({ Onsubmit }: Props) => {
+    const ngrok = UseUrl()
 
     const [ecole_id, set_ecole_id] = useState("");
     const [error_IsNaN, set_error_IsNaN] = useState(false)
@@ -19,7 +21,7 @@ const Insert_ecole_id = ({ Onsubmit }: Props) => {
 
     const fetch_ecole_id = () => {
 
-        fetch('http://localhost:8000/login_handler/verify_school_id/' + ecole_id)
+        fetch(ngrok+'/login_handler/verify_school_id/' + ecole_id)
             .then(response => response.json())
             .then(data => {
                 if (data.bool) {

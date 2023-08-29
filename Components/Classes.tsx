@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
-import { UseParams } from "../App";
+import { UseParams, UseUrl } from "../App";
 
 export interface EleveInfo {
     id: number;
@@ -47,6 +47,8 @@ interface ClassesHandlerProps {
 
 
 const ClassesHandler: React.FC<ClassesHandlerProps> = ({ children }: { children: ReactNode }) => {
+    const ngrok = UseUrl();
+
     const params = UseParams();
     const [classes, set_classes] = useState<ClassInfo[][]>([[]]);
     const [eleves, set_eleves] = useState<Eleves_par_Class>({});
@@ -58,7 +60,7 @@ const ClassesHandler: React.FC<ClassesHandlerProps> = ({ children }: { children:
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://localhost:8000/login_handler/presetup/get_all_classes/" + params.sid);
+                const response = await fetch(ngrok+"/login_handler/presetup/get_all_classes/" + params.sid);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -70,7 +72,7 @@ const ClassesHandler: React.FC<ClassesHandlerProps> = ({ children }: { children:
         };
         const fetchData2 = async () => {
             try {
-                const response = await fetch("http://localhost:8000/login_handler/presetup/get_eleves_ofClass_array/" + params.sid);
+                const response = await fetch(ngrok+"/login_handler/presetup/get_eleves_ofClass_array/" + params.sid);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -180,7 +182,7 @@ const ClassesHandler: React.FC<ClassesHandlerProps> = ({ children }: { children:
         const SendData = async (AllEleves: EleveInfo[]) => {
             try {
 
-                const response = await fetch("http://localhost:8000/login_handler/FinalSave/" + params.sid, {
+                const response = await fetch(ngrok+"/login_handler/FinalSave/" + params.sid, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

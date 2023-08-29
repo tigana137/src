@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
-import { UseParams } from "../App";
+import { UseParams, UseUrl } from "../App";
 
 
 
@@ -56,6 +56,8 @@ interface ProfsHandlerProps {
 }
 
 const ProfsHandler: React.FC<ProfsHandlerProps> = ({ children }: { children: ReactNode }) => {
+    const ngrok = UseUrl();
+
     const params = UseParams();
     const [profs, set_profs] = useState<ProfsDic>({});
     const [classes_arrays, set_classes_arrays] = useState<ClassInfo[][]>([[]]);
@@ -66,7 +68,7 @@ const ProfsHandler: React.FC<ProfsHandlerProps> = ({ children }: { children: Rea
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://localhost:8000/login_handler/presetup/get_working_profs/" + params.sid);
+                const response = await fetch(ngrok +"/login_handler/presetup/get_working_profs/" + params.sid);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -78,7 +80,7 @@ const ProfsHandler: React.FC<ProfsHandlerProps> = ({ children }: { children: Rea
         };
         const fetchData2 = async () => {
             try {
-                const response = await fetch("http://localhost:8000/login_handler/presetup/get_all_classes/" + params.sid);
+                const response = await fetch(ngrok +"/login_handler/presetup/get_all_classes/" + params.sid);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -91,7 +93,7 @@ const ProfsHandler: React.FC<ProfsHandlerProps> = ({ children }: { children: Rea
         };
         const fetchData3 = async () => {
             try {
-                const response = await fetch("http://localhost:8000/login_handler/presetup/get_profs_ofClass_array/" + params.sid);
+                const response = await fetch(ngrok +"/login_handler/presetup/get_profs_ofClass_array/" + params.sid);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }

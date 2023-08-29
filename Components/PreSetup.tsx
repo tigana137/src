@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { UseParams } from "../App";
+import { UseParams, UseUrl } from "../App";
 
 
 
 
 const PreSetup = ({ set_Nav }: { set_Nav: Function }) => {
+    const ngrok = UseUrl();
+
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
     const params = UseParams();
@@ -12,7 +14,7 @@ const PreSetup = ({ set_Nav }: { set_Nav: Function }) => {
     useEffect(() => {
         const fetchData = async () => { //retouche
             try {
-                const response = await fetch('http://localhost:8000/login_handler/initiate_data2/');
+                const response = await fetch(ngrok+'/login_handler/initiate_data2/');
                 if (!response.ok) {
                     <Error />
                 }
@@ -26,7 +28,7 @@ const PreSetup = ({ set_Nav }: { set_Nav: Function }) => {
 
         const fetchData2 = async () => { //retouche
             try {
-                const response = await fetch("http://localhost:8000/login_handler/initiate_data/", {
+                const response = await fetch(ngrok+"/login_handler/initiate_data/", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
