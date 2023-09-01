@@ -31,9 +31,9 @@ export const UseUrl = () => {
 
 function App() {
   const [params, set_params] = useState<ParamsProp>({ sid: 842920, school_name: "", saisieprenom: "", saisienom: "", saisiepasswd: "", login: "", mp: '', ecole_url: "" });
-  const [InsertSid_isVisible, set_InsertSid] = useState(false);
+  const [InsertSid_isVisible, set_InsertSid] = useState(true);
   const [Logins_isVisible, set_Logins] = useState(false);
-  const [Dashborad_isVisible, set_Dashborad] = useState(true);
+  const [Dashborad_isVisible, set_Dashborad] = useState(false);
 
   const handle_sid = (sid: number, school_name: string, saisieprenom: string, saisienom: string, ecole_url: string) => {
     set_params(prevParams => ({

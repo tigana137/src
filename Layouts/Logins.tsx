@@ -1,4 +1,4 @@
-import { ParamsProp, UseParams } from '../App';
+import { ParamsProp, UseParams, UseUrl } from '../App';
 import madrasati from '../assets_img/madrasati.png'
 import stat from '../assets_img/stat.png'
 
@@ -8,6 +8,8 @@ import { useState } from "react";
 
 
 const Logins = ({Onsubmit}:{Onsubmit: Function}) => {
+    const ngrok = UseUrl()
+
     const params = UseParams();
     const [formData, setFormData] = useState<ParamsProp>(params);
     const [Onsubmit_Loding, set_submit_loding] = useState(false)
@@ -28,7 +30,7 @@ const Logins = ({Onsubmit}:{Onsubmit: Function}) => {
             alert(message);
         }
         try {
-            const response = await fetch("http://localhost:8000/login_handler/verify_logins/", {
+            const response = await fetch(ngrok+"/login_handler/verify_logins/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
