@@ -48,9 +48,9 @@ interface ClassesHandlerProps {
 
 const ClassesHandler: React.FC<ClassesHandlerProps> = ({ children }: { children: ReactNode }) => {
     const ngrok = UseUrl();
-    const [isLoading, setIsLoading] = useState(true);
-
     const params = UseParams();
+
+    const [isLoading, setIsLoading] = useState(true);
     const [classes, set_classes] = useState<ClassInfo[][]>([]);
     const [eleves, set_eleves] = useState<Eleves_par_Class>({});
     const [eleves_class, set_eleves_saisie] = useState<EleveInfo[]>([]);
@@ -120,7 +120,7 @@ const ClassesHandler: React.FC<ClassesHandlerProps> = ({ children }: { children:
 
     }, [classes])
 
-    const handle_redirect = ({ Component, level_index = 0, classe_index = 0, classe_id, modifyed_eleves }: { Component: string, level_index?: number; classe_index?: number, classe_id?: number; modifyed_eleves?: EleveInfo[] }) => {
+    const handle_redirect = ({ Component, level_index = -1, classe_index = -1, classe_id, modifyed_eleves }: { Component: string, level_index?: number; classe_index?: number, classe_id?: number; modifyed_eleves?: EleveInfo[] }) => {
         if (Component === 'AllClasses') {
             if (classe_index !== -1) {
                 const current_class = classes[level_index][classe_index];
@@ -128,7 +128,7 @@ const ClassesHandler: React.FC<ClassesHandlerProps> = ({ children }: { children:
                 set_class_saisie(current_class);
                 navigate('/class/Singleclass')
             }
-            else {
+            else if (level_index !== -1) {
                 let elves_level: EleveInfo[] = [];
                 classes[level_index].map((each_class) => {
                     const classe_id = each_class.id
@@ -141,6 +141,9 @@ const ClassesHandler: React.FC<ClassesHandlerProps> = ({ children }: { children:
                 navigate('/class/MixLevel')
 
 
+            }
+            else {
+                navigate('/class/AllNextClasses')
             }
         }
         else if (Component === "TableClass") {
@@ -206,6 +209,21 @@ const ClassesHandler: React.FC<ClassesHandlerProps> = ({ children }: { children:
 
 
             navigate('/class')
+        }
+
+        else if (Component === "AllNextClasses") {
+            if (classe_index !== -1) {
+                const current_class = classes[level_index][classe_index];
+                set_class_saisie(current_class);
+                navigate('/class/PrintNewClass')
+            }
+            else {
+                navigate('/class')
+            }
+        }
+
+        else if (Component === "PrintNewClass") {
+            navigate('/class/AllNextClasses')
         }
 
     }
@@ -282,7 +300,6 @@ const ClassesHandler: React.FC<ClassesHandlerProps> = ({ children }: { children:
                         })
 
                         set_classes(new_classes)
-                        console.log(eleves)
                         set_eleves(Alleleves)
                         const message = "وقع التسجيل بنجاح";
                         alert(message);

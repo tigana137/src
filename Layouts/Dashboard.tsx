@@ -13,6 +13,9 @@ import Choix_DeSaisie from "../Components/Profs/Choix_DeSaisie";
 import ChangeProfMatiere from "../Components/Profs/ChangeProfMatiere";
 import ElevesArrivee from "../Components/Stat/ElevesArrivee";
 import { UseParams } from "../App";
+import PrintClasses from "../Components/Eleves/AllNextClasses";
+import AllNextClasses from "../Components/Eleves/AllNextClasses";
+import PrintNewClass from "../Components/Eleves/PrintNewClass";
 
 
 
@@ -46,7 +49,8 @@ const Dashboard = () => {
                                         <Route index element={<AllClasses_Eleves />} />
                                         <Route path="Singleclass" element={<TableClass_Eleves />} />
                                         <Route path="MixLevel" element={<MixLevel />} />
-
+                                        <Route path="AllNextClasses" element={<AllNextClasses />} />
+                                        <Route path="PrintNewClass" element={<PrintNewClass />} />
                                         <Route path="*" element={<div className="relative md:ml-64 bg-blueGray-100"> hedhi Component t3 class specificly</div>} />
                                     </Routes>
                                 </ClassesHandler>}
@@ -61,6 +65,8 @@ const Dashboard = () => {
                                         <Route path="AllClasses_Profs" element={<AllClasses_Profs />} />
                                         <Route path="TableClass_Profs" element={<TableClass_Profs />} />
                                         <Route path="ChangeProfMatiere" element={<ChangeProfMatiere />} />
+                            
+                                        
                                     </Routes>
                                 </ProfsHandler>}
                             />

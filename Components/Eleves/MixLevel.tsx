@@ -362,7 +362,7 @@ const MixLevel = () => {
                                                             {
                                                                 each_class.map((each_eleve, index) => {
                                                                     return (
-                                                                        <TableRow eleve={each_eleve} hash={index + 1} />
+                                                                        <TableRow key={index} eleve={each_eleve} hash={index + 1} />
                                                                     )
                                                                 })
                                                             }
