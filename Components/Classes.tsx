@@ -228,7 +228,7 @@ const ClassesHandler: React.FC<ClassesHandlerProps> = ({ children }: { children:
 
     }
 
-    const FinalSave = (choice: number) => {
+    const FinalSave = async (choice: number) => {
 
         if (choice === 1) {
             const SaveData = async (AllEleves: EleveInfo[]) => {
@@ -269,7 +269,7 @@ const ClassesHandler: React.FC<ClassesHandlerProps> = ({ children }: { children:
                 AllEleves = AllEleves.concat(eleves[classe_id])
             })
             // console.log(JSON.stringify(AllEleves))
-            SaveData(AllEleves)
+            await SaveData(AllEleves)
             //console.log('tb3th')
         }
         else if (choice === -1) {
@@ -316,7 +316,7 @@ const ClassesHandler: React.FC<ClassesHandlerProps> = ({ children }: { children:
                 }
             };
 
-            ResetData();
+            await ResetData();
         }
         else if (choice === 2) {
 

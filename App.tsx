@@ -18,7 +18,7 @@ export interface ParamsProp {
 }
 
 const ParamsContext = React.createContext<ParamsProp>({ sid: 0, school_name: "", saisieprenom: "", saisienom: "", login: "", saisiepasswd: "", mp: '', ecole_url: "" })
-const UrlContext = React.createContext<string>('http://xax.pagekite.me/')
+const UrlContext = React.createContext<string>('https://xax.pagekite.me/')
 
 export const UseParams = () => {
   return useContext(ParamsContext)
