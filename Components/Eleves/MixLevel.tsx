@@ -182,9 +182,9 @@ const MixLevel = () => {
         return (
             <>
                 <option value={0}></option>
-                {classes[next_level].map((each_class) => {
+                {classes[next_level].map((each_class, index) => {
                     return (
-                        <option value={each_class.id}>{each_class.name}</option>
+                        <option key={index} value={each_class.id}>{each_class.name}</option>
                     )
                 })}
             </>
@@ -197,10 +197,9 @@ const MixLevel = () => {
             updatedClasses[index] = Number(event.target.value);
             return updatedClasses;
         });
-
-
     }
 
+    
     const apply_saisie_class = () => {
         new_classes.map((each_class, index) => {
             const class_saisie = new_classes_saisie[index]
@@ -312,68 +311,64 @@ const MixLevel = () => {
                         <div className="flex h-full" dir="rtl">
                             {new_classes.map((each_class, index) => {
                                 return (
-                                    <>
-                                        <div className="flex flex-col items-center px-5 "
+                                    <div className="flex flex-col items-center px-5 " key={index}>
+                                        <div className="border-2 border-b-0 border-neutral-600 w-full ">
+                                            <span className="  font-semibold pr-2 ">
+                                                إسناد التلاميذ إلى قسم
+                                            </span>
+                                            <select
+                                                key={new_classes_saisie[index]}
+                                                value={new_classes_saisie[index]}
+                                                onChange={(event) => handle_select_next_class(event, index)}
+                                                className=" bg-zinc-300 rounded-lg mr-4"
+                                            >
+                                                <Handle_options />
+                                            </select>
+                                        </div>
+                                        <div className="border-2 border-b-0 border-neutral-600 w-full ">
+                                            {
+                                                moyen_data_array[index] ?
+                                                    (Object.keys(moyen_data_array[index]).sort((a, b) => { return Number(b) - Number(a) }).map((key) => {
+                                                        return (
+                                                            <div className=" pr-1.5" key={key}>
+                                                                {"  عدد التلاميذ المتحصلين على معدل "}
+                                                                <span className={"font-semibold " + moyen_color[Number(key)]}>{key}</span>
+                                                                {" : " + moyen_data_array[index][Number(key)]}
+                                                            </div>
+                                                        )
+                                                    })) : <></>
+                                            }
+                                        </div>
+                                        <table className="  border-2 border-neutral-600 mx-0 bg-gray-100"
+
+                                            id={String(index)}
                                         >
-                                            <div className="border-2 border-b-0 border-neutral-600 w-full "
-                                            >
-                                                <span className="  font-semibold pr-2 ">
-                                                    إسناد التلاميذ إلى قسم
-                                                </span>
-                                                <select
-                                                    key={new_classes_saisie[index]}
-                                                    value={new_classes_saisie[index]}
-                                                    onChange={(event) => handle_select_next_class(event, index)}
-                                                    className=" bg-zinc-300 rounded-lg mr-4"
-                                                >
-                                                    <Handle_options />
-                                                </select>
-                                            </div>
-                                            <div className="border-2 border-b-0 border-neutral-600 w-full ">
-                                                {
-                                                    moyen_data_array[index] ?
-                                                        (Object.keys(moyen_data_array[index]).sort((a, b) => { return Number(b) - Number(a) }).map((key) => {
-                                                            return (
-                                                                <div className=" pr-1.5" key={key}>
-                                                                    {"  عدد التلاميذ المتحصلين على معدل "}
-                                                                    <span className={"font-semibold " + moyen_color[Number(key)]}>{key}</span>
-                                                                    {" : " + moyen_data_array[index][Number(key)]}
-                                                                </div>
-                                                            )
-                                                        })) : <></>
-                                                }
-                                            </div>
-                                            <table className="  border-2 border-neutral-600 mx-0 bg-gray-100"
+                                            <thead dir="rtl">
+                                                <Threads title={"ع/ر"} />
+                                                <Threads title={"الإسم"} />
+                                                <Threads title={"اللقب"} />
+                                                <Threads title={"المعدّل السنوي "} />
+                                            </thead>
+                                            <Droppable droppableId={String(index)}>
+                                                {(provided) => (
+                                                    <tbody className="  border-2 border-neutral-600  h-full"
+                                                        {...provided.droppableProps} ref={provided.innerRef}
+                                                    >
 
-                                                id={String(index)}
-                                            >
-                                                <thead dir="rtl">
-                                                    <Threads title={"ع/ر"} />
-                                                    <Threads title={"الإسم"} />
-                                                    <Threads title={"اللقب"} />
-                                                    <Threads title={"المعدّل السنوي "} />
-                                                </thead>
-                                                <Droppable droppableId={String(index)}>
-                                                    {(provided) => (
-                                                        <tbody className="  border-2 border-neutral-600  h-full"
-                                                            {...provided.droppableProps} ref={provided.innerRef}
-                                                        >
+                                                        {
+                                                            each_class.map((each_eleve, index) => {
+                                                                return (
+                                                                    <TableRow key={index} eleve={each_eleve} hash={index + 1} />
+                                                                )
+                                                            })
+                                                        }
 
-                                                            {
-                                                                each_class.map((each_eleve, index) => {
-                                                                    return (
-                                                                        <TableRow key={index} eleve={each_eleve} hash={index + 1} />
-                                                                    )
-                                                                })
-                                                            }
-
-                                                            {provided.placeholder}
-                                                        </tbody>
-                                                    )}
-                                                </Droppable>
-                                            </table>
-                                        </div >
-                                    </>
+                                                        {provided.placeholder}
+                                                    </tbody>
+                                                )}
+                                            </Droppable>
+                                        </table>
+                                    </div >
                                 )
                             })}
                         </div>

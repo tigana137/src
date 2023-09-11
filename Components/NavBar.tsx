@@ -93,7 +93,10 @@ const NavBar = ({ school_name, Nav_Enabled, Links }: Props) => {
                             <Link to={Nav_Enabled ? Links[2] : '/none'}>
                                 <NavigationComponent titre="إسناد مواد المعلمين" index={1} />
                             </Link>
+
+                            <Link to={Nav_Enabled ? Links[3] : '/none'}>
                             <NavigationComponent titre=" تلاميذ السنة الأولى المسجلين " index={2} />
+                            </Link>
                         </ul>
 
                         {/* Divider */}
@@ -102,7 +105,7 @@ const NavBar = ({ school_name, Nav_Enabled, Links }: Props) => {
                         <HeaderComponent titre="منظومة الإحصاء المدرسي" />
                         {/* Navigation */}
                         <ul>
-                            <Link to={Nav_Enabled ? Links[3] : '/none'}>
+                            <Link to={Nav_Enabled ? Links[4] : '/none'}>
                                 <NavigationComponent titre=" الإحصاء المدرسي 1 نوفمبر " index={3} />
                             </Link>
                             <NavigationComponent titre="نتائج اخر السنة 30 جوان" index={4} />

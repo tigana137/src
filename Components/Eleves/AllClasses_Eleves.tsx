@@ -61,7 +61,7 @@ const AllClasses_Eleves = () => {
 
                 </td>
                 <td className='flex  justify-center items-center mt-7  '>
-                    {level_index < 6 && level_index > 0 && <button className=' h-10 px-1 border-2 border-slate-500 bg-neutral-200 rounded-lg hover:bg-slate-400' onClick={() => handle_redirect({ Component: "AllClasses", level_index: level_index, classe_index: -1 })}>غلط جميع التلاميذ</button>}
+                    {level_index < 6 && level_index > 0 && <button className=' h-10 px-1 border-2 border-slate-500 bg-neutral-200 rounded-lg hover:bg-slate-400' onClick={() => handle_redirect({ Component: "AllClasses", level_index: level_index, classe_index: -1 })}>خلط جميع التلاميذ</button>}
                 </td>
             </tr>
         )

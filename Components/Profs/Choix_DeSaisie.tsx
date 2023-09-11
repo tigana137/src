@@ -6,7 +6,7 @@ import { useSaisiePageContext } from "./Use_ProfsHooks";
 
 
 
-const Choix_DeSaisie = () => {
+const Choix_DeSaisie_Prof = () => {
     const Displaypage = useSaisiePageContext();
     return (
         <>
@@ -22,9 +22,9 @@ const Choix_DeSaisie = () => {
 
                 <div className='flex  fixed bottom-0 my-5 ml-5 mr-4 px-1'>
 
-                    <button className='text-white bg-blue-300 cursor-not-allowed font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3' onClick={() => {}}>التسجيل النهائي</button>
-                    <button type="button" className="text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-3  " onClick={() => {}}>تسجيل التغييرات</button>
-                    <button className='text-white bg-red-500 hover:bg-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3' onClick={() => {}}>إعادة الإعدادات</button>
+                    <button className='text-white bg-blue-300 cursor-not-allowed font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3' onClick={() => { }}>التسجيل النهائي</button>
+                    <button type="button" className="text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-3  " onClick={() => { }}>تسجيل التغييرات</button>
+                    <button className='text-white bg-red-500 hover:bg-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3' onClick={() => { }}>إعادة الإعدادات</button>
 
 
                 </div>
@@ -34,4 +34,4 @@ const Choix_DeSaisie = () => {
 }
 
 
-export default Choix_DeSaisie;
+export default Choix_DeSaisie_Prof;

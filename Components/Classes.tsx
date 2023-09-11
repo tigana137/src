@@ -67,7 +67,6 @@ const ClassesHandler: React.FC<ClassesHandlerProps> = ({ children }: { children:
                 }
                 const jsonData = await response.json();
                 set_classes(jsonData)
-                // console.log(jsonData)
             } catch (error: unknown) {
             }
         };
@@ -81,44 +80,47 @@ const ClassesHandler: React.FC<ClassesHandlerProps> = ({ children }: { children:
                 const jsonData = await response.json();
                 // console.log(jsonData)
                 set_eleves(jsonData);
+
             } catch (error: unknown) {
             }
         };
-        fetchData();
-        fetchData2();
 
-    }, [])
-
-    useEffect(() => {
-        if (classes.length !== 0) {
-            //  const check_exmaned_classes = () => {
-            //
-            //      const new_classes = classes.map((each_level) => {
-            //          return each_level.map((each_class) => {
-            //              const class_id = each_class.id
-            //              const eleves_ofclass = eleves[class_id]
-            //              let bool = true
-            //              eleves_ofclass.map((each_eleve) => {
-            //                  if (each_eleve.next_class === null) {
-            //                      bool = false;
-            //                  }
-            //              })
-            //              return { ...each_class, is_examned: bool }
-            //
-            //          })
-            //      })
-            //      set_classes(new_classes)
-            //  }
-            //  check_exmaned_classes()
+        const orginizer = async () => {
+            await fetchData();
+            await fetchData2();
+            // console.log('cllases:')
+            // console.log(classes)
             setIsLoading(false)
-
+            //  console.log(isLoading)
         }
 
+        orginizer()
 
 
+    }, [])
+    
+    useEffect(() => {
+        if (classes.length !== 0) {
+            const newclas = classes.map((each_level) => {
+                return each_level.map((each_class) => {
+                    const classe_id = each_class.id
+                    let bool = true;
+                    eleves[classe_id].forEach((each_eleve) => {
+                        if (each_eleve.next_class === null) {
+                            bool = false;
+                        }
+                    });
 
+                    return bool ? { ...each_class, is_examned: true } : each_class
+                })
 
-    }, [classes])
+            })
+
+            set_classes(newclas)
+
+        }
+    }, [isLoading])
+
 
     const handle_redirect = ({ Component, level_index = -1, classe_index = -1, classe_id, modifyed_eleves }: { Component: string, level_index?: number; classe_index?: number, classe_id?: number; modifyed_eleves?: EleveInfo[] }) => {
         if (Component === 'AllClasses') {
@@ -324,6 +326,7 @@ const ClassesHandler: React.FC<ClassesHandlerProps> = ({ children }: { children:
 
 
     }
+    
 
     if (isLoading) {
         return <Loading />

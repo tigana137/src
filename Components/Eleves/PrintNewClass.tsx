@@ -32,6 +32,7 @@ const Threads = ({ title }: { title: string }) => {
             <span>
                 {title}
             </span>
+            
         </th>
     )
 }
@@ -59,7 +60,6 @@ const TableRow = ({ eleve, hash }: { eleve: EleveInfo2, hash: number }) => {
             <td className="border-x border-black  text-center align-middle text-xs  w-32">
                 {String(eleve.date_naissance)}
             </td>
-
 
         </tr>
     )
