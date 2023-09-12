@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { Eleve1anneeInfo } from "../Elv1annee";
-import { useElevesContext, useGetAllClasses, useRedirectContext } from "./Use_Elv1Hook";
+import { useElevesContext, useFinalSaveContext, useGetAllClasses, useRedirectContext } from "./Use_Elv1Hook";
 import sort_img from '../../assets_img/sorting2.png'
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
@@ -25,6 +25,7 @@ const Saisie_Auto = () => {
     const [asc_desc, set_asc_desc] = useState(true);
 
     const redirect = useRedirectContext();
+    const FinalSave = useFinalSaveContext()
 
 
     useEffect(() => {
@@ -363,8 +364,54 @@ const Saisie_Auto = () => {
 
             }
 
+        }
+
+        const verify = () => {
+            const displayError = (erreur: "distinct_elements" | "no_empty_index") => { // raka7
+                const message = erreur === "distinct_elements" ? "لا يمكن إسناد جدولين لنفس القسم ! " : "الرجاء إسناد جميع الجداول إلى القسم المعين";
+                alert(message);
+            }
+
+            const no_empty_index = () => {
+                if (new_classes_saisie.length === 0) return false;
+
+                for (const item of new_classes_saisie) {
+                    if (item === undefined || item === null || item === 0) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            const apply_saisie_class = () => {
+                arrays.map((each_class, index) => {
+                    const class_saisie = new_classes_saisie[index]
+                    each_class.map((each_eleve) => {
+                        each_eleve.next_class = class_saisie
+                    })
+                })
+                set_arrays(arrays)
+            }
+
+
+            const distinct_elements = new Set(new_classes_saisie).size === new_classes_saisie.length
+            if (distinct_elements && no_empty_index()) {
+                apply_saisie_class()
+                let all_eleves: Eleve1anneeInfo[] = [];
+                arrays.map((each_class) => {
+                    all_eleves = all_eleves.concat(each_class)
+                })
+                FinalSave(1, all_eleves)
+            }
+            else {
+                !distinct_elements ? displayError("distinct_elements") : displayError("no_empty_index")
+            }
+
 
         }
+
+
+
         return (
             <>
                 <div className="absolute top-0  w-full h-screen    bg-white ">
@@ -438,7 +485,16 @@ const Saisie_Auto = () => {
                             </div>
                         </DragDropContext>
                     </div>
-
+                    <div className='fixed bottom-0 mb-5 ml-6 flex  '>
+                        <button className=' items-center justify-center text-white bg-green-800 hover:bg-green-700  font-medium rounded-lg text-sm  text-center mr-3 w-32 h-11 transition-transform '
+                            onClick={verify}>
+                            تسجيل
+                        </button>
+                        <button className='flex items-center justify-center text-white bg-red-700 hover:bg-red-600  font-medium rounded-lg text-sm  text-center mr-3 w-32 h-11 transition-transform '
+                            onClick={() => set_page(0)}>
+                            رجوع
+                        </button>
+                    </div>
                 </div>
             </>
         )

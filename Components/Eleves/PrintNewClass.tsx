@@ -32,7 +32,7 @@ const Threads = ({ title }: { title: string }) => {
             <span>
                 {title}
             </span>
-            
+
         </th>
     )
 }
@@ -71,6 +71,7 @@ const PrintNewClass = () => {
     const params = UseParams();
     const current_class = useCurrent_ClassesContext();
     const handle_redirect = useGoClassContext();
+    const [isLoading, setIsLoading] = useState(true);
 
     const [eleves, set_eleves] = useState<EleveInfo2[]>([])
 
@@ -86,26 +87,47 @@ const PrintNewClass = () => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                const jsonData = await response.json();
+                const jsonData:EleveInfo2[] = await response.json();
+                if (current_class.level === "1") {
+                    console.log(jsonData)
+                    const new_elvs = jsonData.sort((a, b) => { return a.nom.localeCompare(b.nom) })
+                    console.log(new_elvs)
+                    set_eleves(new_elvs)
+                }
                 set_eleves(jsonData)
             } catch (error: unknown) {
             }
 
         };
 
-        fetchData()
+        const orginizer = async () => {
+
+            await fetchData()
+        
+            setIsLoading(false)
+        }
+
+        orginizer()
+    
+
 
     }, [])
+
+
+
+    if (isLoading) {
+        return <Loading />
+    }
 
     return (
         <>
             <div className="absolute top-0 w-full h-screen " >
                 <div>
                     <button className="text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm  mr-2 mb-2 w-32 h-11" onClick={handlePrint}>طباعة</button>
-                    <button className="text-white bg-red-500 hover:bg-red-700 font-medium rounded-lg text-sm  text-center mr-3 w-32 h-11" onClick={()=>{ handle_redirect({ Component: "PrintNewClass" })}}>رجوع</button>
+                    <button className="text-white bg-red-500 hover:bg-red-700 font-medium rounded-lg text-sm  text-center mr-3 w-32 h-11" onClick={() => { handle_redirect({ Component: "PrintNewClass" }) }}>رجوع</button>
                 </div>
                 <div ref={componentRef} className="flex flex-col items-center justify-center" >
-                    <div className="mt-5 mb-5"> قائمة التلاميذ للقسم {current_class.name }</div>
+                    <div className="mt-5 mb-5"> قائمة التلاميذ للقسم {current_class.name}</div>
                     <table
                         className="items-center table-auto  h-96 mx-11" dir="rtl">
                         <thead dir="rtl" className=" border border-black bg-sky-400">
@@ -138,3 +160,19 @@ const PrintNewClass = () => {
 
 
 export default PrintNewClass;
+
+
+
+const Loading = () => {
+    return (
+        <>
+            <div className="flex flex-col items-center justify-center h-screen ">
+                <div className="mb-4 w-32 h-32 w border-t-4 border-blue-500 rounded-full animate-spin">
+                </div>
+                <div>
+                    Loading
+                </div>
+            </div>
+        </>
+    )
+} 

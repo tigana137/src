@@ -248,6 +248,7 @@ const MixLevel = () => {
         }
     }
 
+    
     const endrop = (result: any) => {
         if (result.destination.droppableId === null) return;
         const eleve_eid: Number = Number(result.draggableId);

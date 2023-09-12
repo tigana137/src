@@ -111,6 +111,10 @@ const Elv1annee: React.FC<Elv1anneeProps> = ({ children }: { children: ReactNode
             }
         }
         else if (Component === "Saisie_Auto") {
+            if (choix === 1) {
+                navigate('/Elv1annee')
+            }
+
             if (choix === -1) {
                 navigate('/Elv1annee/Choix_DeSaisie')
             }
@@ -119,9 +123,58 @@ const Elv1annee: React.FC<Elv1anneeProps> = ({ children }: { children: ReactNode
     }
 
 
-    const FinalSave = async (choice: number) => {
+    const FinalSave = async (choice: number, Elv1classes?: Eleve1anneeInfo[]) => {
+
+        if (choice === 1) {
+            const SaveData = async (AllEleves: Eleve1anneeInfo[]) => {
+                try {
+
+                    const response = await fetch(ngrok + "/login_handler/SaveElvs1Data/" + params.sid, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(AllEleves)
+                    });
+
+                    if (!response.ok) {
+                        // Handle non-successful responses if needed
+                        throw new Error('Network response was not ok.');
+                    }
+
+                    const data = await response.json();
+                    if (data) {
+                        const message = "وقع التسجيل بنجاح";
+                        alert(message);
+                    }
+                    else {
+                        const message = "وقع خطأ عند تحميل البيانات الرجاء الابلاغ عليه";
+                        alert(message);
+                    }
 
 
+                } catch (error) {
+                    const message = "وقع خطأ عند تحميل البيانات الرجاء الابلاغ عليه";
+                    alert(message);
+                }
+            };
+
+            Elv1classes && await SaveData(Elv1classes);
+            const fetchData = async () => {
+                try {
+                    const response = await fetch(ngrok + "/login_handler/get_new_elv1/" + String(params.sid) + "?format=json");
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    const jsonData = await response.json();
+                    set_eleves(jsonData)
+                } catch (error: unknown) {
+                }
+            };
+
+            await fetchData();
+            handle_redirect("Saisie_Auto", 1)
+        }
 
 
         if (choice === -1) {

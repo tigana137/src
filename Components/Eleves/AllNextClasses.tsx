@@ -1,8 +1,7 @@
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { UseUrl, UseParams } from "../../App";
 import { useGoClassContext } from "./Use_ClassHooks";
-import { useReactToPrint } from "react-to-print";
 
 export interface ClassInfo2 {
     id: number;
@@ -20,6 +19,7 @@ interface MyDictionary {
 const AllNextClasses = () => {
     const ngrok = UseUrl();
     const params = UseParams();
+    const [isLoading, setIsLoading] = useState(true);
 
 
     const handle_redirect = useGoClassContext();
@@ -39,8 +39,13 @@ const AllNextClasses = () => {
             }
         };
 
+        const orginizer = async () => {
 
-        fetchData()
+            await fetchData()
+            setIsLoading(false)
+        }
+
+        orginizer()
 
     }, [])
 
@@ -73,7 +78,9 @@ const AllNextClasses = () => {
 
 
 
-
+    if (isLoading) {
+        return <Loading />
+    }
 
     return (
         <>
@@ -107,3 +114,17 @@ export default AllNextClasses;
 
 
 
+
+const Loading = () => {
+    return (
+        <>
+            <div className="flex flex-col items-center justify-center h-screen ">
+                <div className="mb-4 w-32 h-32 w border-t-4 border-blue-500 rounded-full animate-spin">
+                </div>
+                <div>
+                    Loading
+                </div>
+            </div>
+        </>
+    )
+}
